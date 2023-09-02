@@ -1,14 +1,22 @@
 
-
-	.global _start #faz a label ser visivel para o linker
+	.global _start
 
 	.text
 
-_start:	
+_start:
 	
-	mov $60, %rax #exit
-	mov $0, %rdi #return code 0
-	add $1, %rdi
-	syscall	
+	#b=7; while (b > 0) { b--: }
+	mov $7, %rbx
 
+loop:
+	cmp $1, %rbx
+	jle behindloop
+	
+	sub $1, %rbx
+	jmp loop
 
+behindloop:
+
+	mov $60, %rax #60: syscall para exit
+	mov %rbx, %rdi #return code (rdi) vai ser igual a rbx
+	syscall
